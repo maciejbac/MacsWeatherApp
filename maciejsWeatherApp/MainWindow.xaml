@@ -1,0 +1,35 @@
+﻿<Window x:Class="maciejsWeatherApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:maciejsWeatherApp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="250" Width="600">
+    <Grid Margin="10">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Row="0" Grid.Column="0" Margin="5,0,0,0">
+            <Label Grid.Column="0" Grid.Row="0">Mac's weather app</Label>
+            <Button x:Name="btnCardiffAutofill" Click="btnCardiffAutofill_Click">Autofill London</Button>
+            <Button x:Name="btnShow"  Click="ButtonShow_Click" Margin="0, 5">Show Weather</Button>
+            <TextBox x:Name="latitude"/>
+            <TextBox x:Name="longitude" Margin="0, 5"/>
+            <Button x:Name="btnClear"  Click="ButtonClear_Click">Clear</Button>
+
+
+        </StackPanel>
+        <StackPanel Grid.Column="1" Grid.Row="0">
+            <Image Name="ImageViewer1" Height="400" Width="400" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 0, 0, 0"/>
+        </StackPanel>
+    </Grid>
+</Window>
