@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Net;
+using System.Net.Http;
 
 namespace maciejsWeatherApp
 {
@@ -20,6 +22,8 @@ namespace maciejsWeatherApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        static readonly HttpClient client = new HttpClient();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -53,6 +57,21 @@ namespace maciejsWeatherApp
             longitude.Text = "";
             latitude.Text = "";
             ImageViewer1.Source = null;
+            postcodeOutput.Content = null;
+        }
+
+        async void ButtonPostcode_Click(object sender, RoutedEventArgs e)
+        {
+            var urlRequest = "http://api.postcodes.io/postcodes/" + postcode.Text.ToString();
+            HttpResponseMessage postcodeJson = await client.GetAsync(urlRequest);
+            postcodeJson.EnsureSuccessStatusCode();
+            string responseBody = await postcodeJson.Content.ReadAsStringAsync();
+
+            //todo need to deserialise the json object to pull the location values
+
+            postcodeOutput.Content = "hello world";
         }
     }
 }
+
+

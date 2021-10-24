@@ -27,6 +27,7 @@
             <Button x:Name="btnClear" Click="ButtonClear_Click" Margin="0, 2.5">Clear</Button>
             <Button x:Name="btnPostcode" Click="ButtonPostcode_Click" Margin="0, 2.5">Search by postcode</Button>
             <TextBox x:Name="postcode" Margin="0, 2.5"/>
+            <Label x:Name="postcodeOutput">Placeholder</Label>
 
 
         </StackPanel>
