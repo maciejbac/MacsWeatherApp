@@ -39,7 +39,6 @@ namespace maciejsWeatherApp
             bitmap.BeginInit();
             bitmap.UriSource = new Uri(fullFilePath, UriKind.Absolute);
             bitmap.EndInit();
-
             ImageViewer1.Source = bitmap;
         }
 
