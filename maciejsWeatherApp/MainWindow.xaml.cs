@@ -14,16 +14,29 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Net;
 using System.Net.Http;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace maciejsWeatherApp
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    /// 
+    public class weatherJson
+    {
+        public int status { get; set; }
+        public result result { get; set; }
+    }
+
+    public class result
+    {
+        public double longitude { get; set; }
+        public double latitude { get; set; }
+    }
     public partial class MainWindow : Window
     {
         static readonly HttpClient client = new HttpClient();
-
         public MainWindow()
         {
             InitializeComponent();
@@ -31,13 +44,13 @@ namespace maciejsWeatherApp
 
         private void ButtonShow_Click(object sender, RoutedEventArgs e)
         {
+            generateImage(longitude.Text, latitude.Text);
 
-            var image = new Image();
+        }
 
-            string lon = longitude.Text;
-            string lat = latitude.Text;
-
-            var fullFilePath = @"http://www.7timer.info/bin/astro.php?lon="+lon+"&lat="+lat+"&ac=0&lang=en&unit=metric&output=internal&tzshift=0";
+        private void generateImage(string longitude, string latitude)
+        {
+            var fullFilePath = @"http://www.7timer.info/bin/astro.php?lon=" + longitude + "&lat=" + latitude + "&ac=0&lang=en&unit=metric&output=internal&tzshift=0";
 
             BitmapImage bitmap = new BitmapImage();
             bitmap.BeginInit();
@@ -46,7 +59,7 @@ namespace maciejsWeatherApp
             ImageViewer1.Source = bitmap;
         }
 
-        private void btnCardiffAutofill_Click(object sender, RoutedEventArgs e)
+        private void btnLondonAutofill_Click(object sender, RoutedEventArgs e)
         {
             longitude.Text = "-0.1";
             latitude.Text = "51.5";
@@ -65,11 +78,10 @@ namespace maciejsWeatherApp
             var urlRequest = "http://api.postcodes.io/postcodes/" + postcode.Text.ToString();
             HttpResponseMessage postcodeJson = await client.GetAsync(urlRequest);
             postcodeJson.EnsureSuccessStatusCode();
-            string responseBody = await postcodeJson.Content.ReadAsStringAsync();
 
-            //todo need to deserialise the json object to pull the location values
+            weatherJson weather = JsonSerializer.Deserialize<weatherJson>(await postcodeJson.Content.ReadAsStringAsync(););
 
-            postcodeOutput.Content = "hello world";
+            generateImage(weather.result.longitude.ToString(), weather.result.latitude.ToString());
         }
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:maciejsWeatherApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="250" Width="600">
+        Title="MainWindow" Height="350" Width="600">
     <Grid Margin="10">
 
         <Grid.RowDefinitions>
@@ -20,15 +20,13 @@
 
         <StackPanel Grid.Row="0" Grid.Column="0" Margin="5,0,0,0">
             <Label Grid.Column="0" Grid.Row="0">Mac's weather app</Label>
-            <Button x:Name="btnCardiffAutofill" Click="btnCardiffAutofill_Click" Margin="0, 2.5">Autofill London</Button>
+            <Button x:Name="btnLondonAutofill" Click="btnLondonAutofill_Click" Margin="0, 2.5">Autofill London</Button>
             <Button x:Name="btnShow"  Click="ButtonShow_Click" Margin="0, 2.5">Show Weather</Button>
             <TextBox x:Name="latitude" Margin="0, 2.5"/>
             <TextBox x:Name="longitude" Margin="0, 2.5"/>
             <Button x:Name="btnClear" Click="ButtonClear_Click" Margin="0, 2.5">Clear</Button>
             <Button x:Name="btnPostcode" Click="ButtonPostcode_Click" Margin="0, 2.5">Search by postcode</Button>
             <TextBox x:Name="postcode" Margin="0, 2.5"/>
-            <Label x:Name="postcodeOutput">Placeholder</Label>
-
 
         </StackPanel>
         <StackPanel Grid.Column="1" Grid.Row="0">
