@@ -70,7 +70,6 @@ namespace maciejsWeatherApp
             longitude.Text = "";
             latitude.Text = "";
             ImageViewer1.Source = null;
-            postcodeOutput.Content = null;
         }
 
         async void ButtonPostcode_Click(object sender, RoutedEventArgs e)
