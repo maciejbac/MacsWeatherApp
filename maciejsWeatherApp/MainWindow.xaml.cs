@@ -23,20 +23,20 @@ namespace maciejsWeatherApp
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     /// 
-    public class weatherJson
+    public class WeatherJson
     {
-        public int status { get; set; }
-        public result result { get; set; }
+        public int Status { get; set; }
+        public Result result { get; set; }
     }
 
-    public class result
+    public class Result
     {
         public double longitude { get; set; }
         public double latitude { get; set; }
     }
     public partial class MainWindow : Window
     {
-        static readonly HttpClient client = new HttpClient();
+        private static readonly HttpClient client = new();
         public MainWindow()
         {
             InitializeComponent();
@@ -44,22 +44,22 @@ namespace maciejsWeatherApp
 
         private void ButtonShow_Click(object sender, RoutedEventArgs e)
         {
-            generateImage(longitude_input.Text, latitude_input.Text);
+            GenerateImage(longitude_input.Text, latitude_input.Text);
 
         }
 
-        private void generateImage(string longitude, string latitude)
+        private void GenerateImage(string longitude, string latitude)
         {
-            var fullFilePath = @"http://www.7timer.info/bin/astro.php?lon=" + longitude + "&lat=" + latitude + "&ac=0&lang=en&unit=metric&output=internal&tzshift=0";
+            string fullFilePath = @"http://www.7timer.info/bin/astro.php?lon=" + longitude + "&lat=" + latitude + "&ac=0&lang=en&unit=metric&output=internal&tzshift=0";
 
-            BitmapImage bitmap = new BitmapImage();
+            BitmapImage bitmap = new();
             bitmap.BeginInit();
             bitmap.UriSource = new Uri(fullFilePath, UriKind.Absolute);
             bitmap.EndInit();
             ImageViewer1.Source = bitmap;
         }
 
-        private void btnLondonAutofill_Click(object sender, RoutedEventArgs e)
+        private void BtnLondonAutofill_Click(object sender, RoutedEventArgs e)
         {
             longitude_input.Text = "-0.1";
             latitude_input.Text = "51.5";
@@ -75,13 +75,16 @@ namespace maciejsWeatherApp
 
         async void ButtonPostcode_Click(object sender, RoutedEventArgs e)
         {
-            var urlRequest = "http://api.postcodes.io/postcodes/" + postcode_input.Text.ToString();
+            string urlRequest = "http://api.postcodes.io/postcodes/" + postcode_input.Text.ToString();
             HttpResponseMessage postcodeJson = await client.GetAsync(urlRequest);
             postcodeJson.EnsureSuccessStatusCode();
 
-            weatherJson weather = JsonSerializer.Deserialize<weatherJson>(await postcodeJson.Content.ReadAsStringAsync());
+            WeatherJson weather = JsonSerializer.Deserialize<WeatherJson>(await postcodeJson.Content.ReadAsStringAsync());
 
-            generateImage(weather.result.longitude.ToString(), weather.result.latitude.ToString());
+            //if(weather.Status == 200)
+            //{
+            GenerateImage(weather.result.longitude.ToString(), weather.result.latitude.ToString());
+            //}
         }
     }
 }
