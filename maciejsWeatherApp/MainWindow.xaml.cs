@@ -23,16 +23,16 @@ namespace maciejsWeatherApp
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     /// 
-    public class weatherJson
+    public class WeatherJson
     {
-        public int status { get; set; }
-        public result result { get; set; }
+        public int Status { get; set; }
+        public Result ResultStruct { get; set; }
     }
 
-    public class result
+    public class Result
     {
-        public double longitude { get; set; }
-        public double latitude { get; set; }
+        public double Longitude { get; set; }
+        public double Latitude { get; set; }
     }
     public partial class MainWindow : Window
     {
@@ -75,13 +75,12 @@ namespace maciejsWeatherApp
 
         async void ButtonPostcode_Click(object sender, RoutedEventArgs e)
         {
-            var urlRequest = "http://api.postcodes.io/postcodes/" + postcode_input.Text.ToString();
+            string urlRequest = "http://api.postcodes.io/postcodes/" + postcode_input.Text.ToString();
             HttpResponseMessage postcodeJson = await client.GetAsync(urlRequest);
-            postcodeJson.EnsureSuccessStatusCode();
 
-            weatherJson weather = JsonSerializer.Deserialize<weatherJson>(await postcodeJson.Content.ReadAsStringAsync());
+            WeatherJson weather = JsonSerializer.Deserialize<WeatherJson>(await postcodeJson.Content.ReadAsStringAsync());
 
-            generateImage(weather.result.longitude.ToString(), weather.result.latitude.ToString());
+            generateImage(weather.ResultStruct.Longitude.ToString(), weather.ResultStruct.Latitude.ToString());
         }
     }
 }
