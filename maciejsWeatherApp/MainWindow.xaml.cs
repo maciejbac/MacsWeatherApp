@@ -44,7 +44,7 @@ namespace maciejsWeatherApp
 
         private void ButtonShow_Click(object sender, RoutedEventArgs e)
         {
-            generateImage(longitude.Text, latitude.Text);
+            generateImage(longitude_input.Text, latitude_input.Text);
 
         }
 
@@ -61,24 +61,25 @@ namespace maciejsWeatherApp
 
         private void btnLondonAutofill_Click(object sender, RoutedEventArgs e)
         {
-            longitude.Text = "-0.1";
-            latitude.Text = "51.5";
+            longitude_input.Text = "-0.1";
+            latitude_input.Text = "51.5";
         }
 
         private void ButtonClear_Click(object sender, RoutedEventArgs e)
         {
-            longitude.Text = "";
-            latitude.Text = "";
+            longitude_input.Text = "";
+            latitude_input.Text = "";
+            postcode_input.Text = "";
             ImageViewer1.Source = null;
         }
 
         async void ButtonPostcode_Click(object sender, RoutedEventArgs e)
         {
-            var urlRequest = "http://api.postcodes.io/postcodes/" + postcode.Text.ToString();
+            var urlRequest = "http://api.postcodes.io/postcodes/" + postcode_input.Text.ToString();
             HttpResponseMessage postcodeJson = await client.GetAsync(urlRequest);
             postcodeJson.EnsureSuccessStatusCode();
 
-            weatherJson weather = JsonSerializer.Deserialize<weatherJson>(await postcodeJson.Content.ReadAsStringAsync(););
+            weatherJson weather = JsonSerializer.Deserialize<weatherJson>(await postcodeJson.Content.ReadAsStringAsync());
 
             generateImage(weather.result.longitude.ToString(), weather.result.latitude.ToString());
         }
